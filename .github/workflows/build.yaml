@@ -2,18 +2,18 @@ name: Build Windows EXE
 
 on:
   push:
-    branches: [main] # Сборка будет запускаться каждый раз, когда ты делаешь push
+    branches: [main]
 
 jobs:
   build:
-    runs-on: windows-latest # Запускаем на сервере с Windows
+    runs-on: windows-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4  # Обновлено до v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5 # Обновлено до v5
         with:
           python-version: "3.12"
 
@@ -21,13 +21,12 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install pyinstaller
-          # Если у тебя будут другие библиотеки, добавь их сюда
 
       - name: Build EXE
         run: pyinstaller --onefile --noconsole --name "SuperRenamer" main.py
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4  # Обновлено до v4
         with:
           name: Windows-Executable
           path: dist/SuperRenamer.exe
